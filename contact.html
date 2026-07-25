@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="contactApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Page</title>
+    <!-- Include AngularJS Script via CDN -->
+    <script src="https://googleapis.com"></script>
 </head>
-<body style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; min-height: 100vh;">
+<body ng-controller="ContactController" style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; min-height: 100vh;">
 
     <nav style="background: #ffffff; color: #333; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;">
         <div style="font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; color: #4F46E5;">BrandName</div>
@@ -24,30 +26,71 @@
         <section id="contact" style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); width: 100%; max-width: 600px; border: 1px solid #e5e7eb;">
             <h2 style="text-align: center; font-size: 2.2rem; margin-top: 0; margin-bottom: 10px; color: #1f2937;">Get in Touch</h2>
             <p style="text-align: center; color: #6b7280; margin-bottom: 30px;">We would love to hear from you. Fill out the form below to send us a message.</p>
-            <form action="https://api.web3forms.com/submit" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+            
+            <!-- Handled form submit through AngularJS ng-submit -->
+            <form ng-submit="handleContactSubmit()" style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <label for="name" style="font-weight: 600; color: #4b5563; font-size: 0.95rem;">Your Name</label>
-                    <input type="text" id="name" name="name" required style="padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 1rem;">
+                    <input type="text" id="name" ng-model="formData.name" required style="padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 1rem;">
                 </div>
-
+                
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <label for="email" style="font-weight: 600; color: #4b5563; font-size: 0.95rem;">Your Email</label>
-                    <input type="email" id="email" name="email" required style="padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 1rem;">
+                    <input type="email" id="email" ng-model="formData.email" required style="padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 1rem;">
                 </div>
-
+                
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <label for="message" style="font-weight: 600; color: #4b5563; font-size: 0.95rem;">Your Message</label>
-                    <textarea id="message" name="message" rows="5" required style="padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 1rem; resize: vertical;"></textarea>
+                    <textarea id="message" ng-model="formData.message" rows="5" required style="padding: 12px; border-radius: 6px; border: 1px solid #d1d5db; font-size: 1rem; resize: vertical;"></textarea>
                 </div>
-
-                <input type="hidden" name="redirect" value="https://web3forms.com/success">
-
+                
                 <button type="submit" style="padding: 14px; background-color: #4F46E5; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2); transition: background-color 0.3s;">Submit Form</button>
+                
+                <!-- Dynamically render the status via expressions -->
+                <p style="margin: 0; color: #4b5563; font-size: 0.95rem;">{{statusText}}</p>
             </form>
-        </section>
+        
     </main>
 
+    <script>
+        // Define the AngularJS Application Module
+        var app = angular.module('contactApp', []);
+
+        // Define the Controller with $window service dependency injected
+        app.controller('ContactController', function($scope, $window) {
+            // Initial form state data
+            $scope.formData = {
+                name: '',
+                email: '',
+                message: ''
+            };
+            
+            $scope.statusText = 'Your email app will open with your message ready to send.';
+
+            // Handle the submission inside scope
+            $scope.handleContactSubmit = function() {
+                var name = $scope.formData.name.trim();
+                var email = $scope.formData.email.trim();
+                var message = $scope.formData.message.trim();
+                
+                var subject = encodeURIComponent('New contact message');
+                var body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+                
+                // Open user's default email tool
+                $window.location.href = `mailto:kpjethwa07-stack@gmail.com?subject=${subject}&body=${body}`;
+                
+                // Reset form fields
+                $scope.formData = {
+                    name: '',
+                    email: '',
+                    message: ''
+                };
+                
+                // Update feedback message
+                $scope.statusText = 'Your email app should open with the message ready to send.';
+            };
+        });
+    </script>
 </body>
 </html>
