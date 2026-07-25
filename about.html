@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="aboutApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="AboutController" style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; min-height: 100vh;">
+
+  <!-- Navigation -->
+  <nav style="background: #ffffff; color: #333; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;">
+    <div style="font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; color: #4F46E5;">BrandName</div>
+    <ul style="list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center;">
+      <li><a href="about.html" style="color: #4F46E5; text-decoration: none; font-weight: 600;">About</a></li>
+      <li><a href="portfolio.html" style="color: #4b5563; text-decoration: none; font-weight: 600;">Portfolio</a></li>
+      <li><a href="skills.html" style="color: #4b5563; text-decoration: none; font-weight: 600;">Skills</a></li>
+      <li><a href="contact.html" style="background-color: #4F46E5; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 20px;">
+    <section style="background: white; padding: 50px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); width: 100%; max-width: 800px; border: 1px solid #e5e7eb; text-align: center;">
+      
+      <div style="width: 120px; height: 120px; background-color: #e0e7ff; border-radius: 50%; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; color: #4F46E5; font-size: 2.5rem; font-weight: bold;">
+        {{profile.initials}}
+      </div>
+      
+      <h1 style="font-size: 2.2rem; margin-top: 0; margin-bottom: 10px; color: #1f2937;">{{profile.name}}</h1>
+      <p style="color: #4F46E5; font-weight: 600; font-size: 1.1rem; margin-bottom: 20px;">{{profile.role}}</p>
+      
+      <p style="color: #6b7280; margin-bottom: 40px; line-height: 1.6; font-size: 1.05rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        {{profile.bio}}
+      </p>
+
+      <hr style="border: none; border-top: 1px solid #e5e7eb; margin-bottom: 30px;">
+
+      <h3 style="color: #374151; margin-bottom: 20px; font-size: 1.2rem;">Connect & Explore My Code</h3>
+      
+      <!-- Platform Links rendered via AngularJS -->
+      <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+        <a ng-repeat="link in links" ng-href="{{link.url}}" target="_blank" style="display: flex; align-items: center; gap: 10px; padding: 12px 24px; background-color: {{link.bgColor}}; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          {{link.label}}
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    var app = angular.module('aboutApp', []);
+    app.controller('AboutController', function($scope) {
+      $scope.profile = {
+        name: "John Smith",
+        initials: "JS",
+        role: "Full-Stack Developer & Data Enthusiast",
+        bio: "I specialize in building scalable web applications and exploring data science concepts. I'm passionate about open-source software and sharing interactive notebooks to help others learn."
+      };
+      
+      $scope.links = [
+        { label: "GitHub Profile", url: "https://github.com/yourusername", bgColor: "#24292e" },
+        { label: "Colab Notebooks", url: "https://colab.research.google.com/", bgColor: "#f59e0b" },
+        { label: "LinkedIn", url: "https://linkedin.com/in/yourusername", bgColor: "#0077b5" }
+      ];
+    });
+  </script>
+</body>
+</html>
