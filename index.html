@@ -1,125 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="landingApp">
+<html lang="en" ng-app="portfolioApp">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar File</title>
-    <!-- Include AngularJS Script via CDN -->
-    <script src="https://googleapis.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Projects & Repos</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
-<body ng-controller="LandingController" style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; scroll-behavior: smooth;">
+<body ng-controller="PortfolioController" style="margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; min-height: 100vh;">
 
-    <!-- Dynamic Navigation Bar -->
-    <nav style="background: #ffffff; color: #333; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;">
-        <div style="font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; color: #4F46E5;">BrandName</div>
-        <ul style="list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center;">
-            <!-- Render menu items except Contact Us through ng-repeat -->
-            <li ng-repeat="item in menuItems">
-                <a ng-href="{{item.link}}" style="color: #4b5563; text-decoration: none; font-weight: 600;">{{item.name}}</a>
-            </li>
-            <!-- Distinct styling preserved for Contact Us -->
-            <li>
-                <a href="#contact" style="background-color: #4F46E5; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);">Contact Us</a>
-            </li>
-        </ul>
-    </nav>
+  <!-- Navigation -->
+  <nav style="background: #ffffff; color: #333; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;">
+    <div style="font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; color: #4F46E5;">BrandName</div>
+    <ul style="list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center;">
+      <li><a href="about.html" style="color: #4b5563; text-decoration: none; font-weight: 600;">About</a></li>
+      <li><a href="portfolio.html" style="color: #4F46E5; text-decoration: none; font-weight: 600;">Portfolio</a></li>
+      <li><a href="skills.html" style="color: #4b5563; text-decoration: none; font-weight: 600;">Skills</a></li>
+      <li><a href="contact.html" style="background-color: #4F46E5; color: #fff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);">Contact Us</a></li>
+    </ul>
+  </nav>
 
-    <!-- Home Header Section -->
-    <header id="home" style="padding: 100px 20px; text-align: center; background: linear-gradient(135deg, #4F46E5 0%, #3b82f6 100%); color: white;">
-        <h1 style="font-size: 3rem; margin-bottom: 20px; font-weight: 800;">Build Better Digital Experiences</h1>
-        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px; opacity: 0.9;">Empowering your web projects with modern design systems, optimized performance, and seamless user navigation.</p>
-        <a href="#features" style="background: white; color: #4F46E5; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Explore Features</a>
-    </header>
+  <!-- Main Content -->
+  <main style="flex: 1; padding: 60px 20px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+    <div style="text-align: center; margin-bottom: 50px;">
+      <h1 style="font-size: 2.5rem; color: #1f2937; margin-bottom: 10px;">{{pageTitle}}</h1>
+      <p style="color: #6b7280; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">{{pageDescription}}</p>
+    </div>
 
-    <!-- Features Section via Data Loop -->
-    <section id="features" style="padding: 80px 20px; max-width: 1100px; margin: 0 auto; text-align: center;">
-        <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #1f2937;">Core Features</h2>
-        <p style="color: #6b7280; margin-bottom: 50px;">Discover what makes our platform stand out from the rest.</p>
-        <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
-            <!-- Loop through features data array -->
-            <div ng-repeat="feature in features" style="background: white; padding: 30px; border-radius: 10px; width: 300px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #e5e7eb; text-align: left;">
-                <h3 style="color: #4F46E5; margin-top: 0;">{{feature.title}}</h3>
-                <p style="color: #4b5563; font-size: 0.95rem; line-height: 1.5;">{{feature.desc}}</p>
-            </div>
+    <!-- Projects Grid rendered via AngularJS ng-repeat -->
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+      <div ng-repeat="project in projects" style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; width: 100%; max-width: 340px; display: flex; flex-direction: column;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <span style="background: {{project.badgeBg}}; color: {{project.badgeColor}}; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">{{project.platform}}</span>
         </div>
-    
+        <h3 style="margin: 0 0 10px 0; color: #1f2937; font-size: 1.3rem;">{{project.title}}</h3>
+        <p style="color: #6b7280; font-size: 0.95rem; line-height: 1.5; flex: 1;">{{project.description}}</p>
+        <a ng-href="{{project.link}}" target="_blank" style="margin-top: 20px; display: inline-block; text-align: center; padding: 10px; background-color: {{project.buttonBg}}; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">{{project.buttonText}}</a>
+      </div>
+    </div>
+  </main>
 
-    <!-- About Section -->
-    <section id="about" style="padding: 80px 20px; background: #ffffff; text-align: center;">
-        <div style="max-width: 800px; margin: 0 auto;">
-            <h2 style="font-size: 2.2rem; margin-bottom: 20px; color: #1f2937;">About Our Mission</h2>
-            <p style="color: #4b5563; font-size: 1.1rem; line-height: 1.6;">We are dedicated to delivering clean, scalable, and intuitive frontend templates. Our focus is on bridging the gap between aesthetic design and robust coding architectures, helping developers build exceptional products faster.</p>
-        </div>
-    
-
-    <!-- Services Section via Data Loop -->
-    <section id="services" style="padding: 80px 20px; max-width: 1100px; margin: 0 auto; text-align: center;">
-        <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #1f2937;">Our Services</h2>
-        <p style="color: #6b7280; margin-bottom: 50px;">Tailored solutions for your digital growth.</p>
-        <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
-            <!-- Loop through services data array -->
-            <div ng-repeat="service in services" style="background: #f8f9fa; padding: 30px; border-radius: 10px; width: 300px; text-align: left;">
-                <h3 style="color: #1f2937; margin-top: 0;">{{service.title}}</h3>
-                <p style="color: #4b5563; font-size: 0.95rem;">{{service.desc}}</p>
-            </div>
-        </div>
-    
-
-    <!-- Portfolio Section via Data Loop -->
-    <section id="portfolio" style="padding: 80px 20px; background: #ffffff; text-align: center;">
-        <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #1f2937;">Recent Work</h2>
-        <p style="color: #6b7280; margin-bottom: 40px;">A glimpse into our latest repository deployments.</p>
-        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 1000px; margin: 0 auto;">
-            <!-- Loop through portfolio array -->
-            <div ng-repeat="project in portfolio" style="background: #e5e7eb; height: 180px; width: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #6b7280; font-weight: bold;">
-                {{project}}
-            </div>
-        </div>
-    
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" style="padding: 80px 20px; text-align: center; background: #f8f9fa;">
-        <h2 style="font-size: 2.2rem; margin-bottom: 40px; color: #1f2937;">What People Say</h2>
-        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
-            <p style="font-style: italic; color: #4b5563; line-height: 1.6; margin-bottom: 20px;">"Integrating these layout components into our repository was seamless. The structure is clean and extremely easy to customize."</p>
-            <h4 style="margin: 0; color: #4F46E5;">Krish G.</h4>
-            <span style="font-size: 0.85rem; color: #6b7280;">Repository Maintainer</span>
-        </div>
-    
-
-    <script>
-        // Initialize the AngularJS module
-        var app = angular.module('landingApp', []);
-
-        // Define controller containing data models
-        app.controller('LandingController', function($scope) {
-            
-            // Model for Navigation Links
-            $scope.menuItems = [
-                { name: 'Home', link: '#home' },
-                { name: 'Features', link: '#features' },
-                { name: 'About', link: '#about' },
-                { name: 'Services', link: '#services' },
-                { name: 'Portfolio', link: '#portfolio' },
-                { name: 'Testimonials', link: '#testimonials' }
-            ];
-
-            // Model for Core Features Cards
-            $scope.features = [
-                { title: 'Lightning Fast', desc: 'Optimized codebases built for maximum performance and quick loading times across all devices.' },
-                { title: 'Fully Responsive', desc: 'Flexible layouts designed to scale smoothly from mobile screens to ultra-wide desktop monitors.' },
-                { title: 'Secure & Reliable', desc: 'Built using modern web standards ensuring high security and seamless backend integrations.' }
-            ];
-
-            // Model for Services Grid
-            $scope.services = [
-                { title: 'Web Development', desc: 'Custom HTML, CSS, and JavaScript solutions built to fit your precise repository layout.' },
-                { title: 'UI/UX Design', desc: 'Clean visual layouts designed for optimum engagement and user retention.' }
-            ];
-
-            // Model for Portfolio Projects
-            $scope.portfolio = ['Project Alpha', 'Project Beta', 'Project Gamma'];
-        });
-    </script>
+  <script>
+    var app = angular.module('portfolioApp', []);
+    app.controller('PortfolioController', function($scope) {
+      $scope.pageTitle = "My Projects & Code";
+      $scope.pageDescription = "Explore my open-source repositories on GitHub and interactive machine learning notebooks on Google Colab.";
+      
+      $scope.projects = [
+        {
+          platform: "GitHub",
+          title: "Python Web Scraper",
+          description: "A lightweight, asynchronous web scraping tool built with Python and BeautifulSoup to extract data efficiently.",
+          link: "https://github.com/yourusername/scraper",
+          badgeBg: "#f3f4f6", badgeColor: "#374151", buttonBg: "#1f2937", buttonText: "View Repository"
+        },
+        {
+          platform: "Google Colab",
+          title: "Data Analysis Pipeline",
+          description: "An interactive notebook demonstrating data cleaning, visualization with Matplotlib, and predictive modeling using Pandas.",
+          link: "https://colab.research.google.com/",
+          badgeBg: "#fffbeb", badgeColor: "#d97706", buttonBg: "#d97706", buttonText: "Open in Colab"
+        },
+        {
+          platform: "GitHub",
+          title: "Angular Contact App",
+          description: "A single-page application handling forms and data binding using AngularJS and modern CSS.",
+          link: "https://github.com/yourusername/angular-app",
+          badgeBg: "#f3f4f6", badgeColor: "#374151", buttonBg: "#1f2937", buttonText: "View Repository"
+        }
+      ];
+    });
+  </script>
 </body>
 </html>
